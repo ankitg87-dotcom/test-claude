@@ -1,0 +1,124 @@
+{
+  "type": "object",
+  "title": "Invoice",
+  "description": "Generic schema for extracting fields from a commercial invoice.",
+  "properties": {
+    "invoice_number": {
+      "type": "string",
+      "description": "Unique invoice identifier as printed on the document."
+    },
+    "invoice_date": {
+      "type": "string",
+      "description": "Date the invoice was issued, as printed."
+    },
+    "due_date": {
+      "type": "string",
+      "description": "Payment due date, if stated."
+    },
+    "order_number": {
+      "type": "string",
+      "description": "Purchase order or order reference number, if stated."
+    },
+    "currency": {
+      "type": "string",
+      "description": "Currency of the amounts, as a code or symbol (e.g. USD, INR, EUR)."
+    },
+    "seller": {
+      "type": "object",
+      "description": "The party issuing the invoice.",
+      "properties": {
+        "name": { "type": "string", "description": "Seller or vendor name." },
+        "address": { "type": "string", "description": "Seller address." },
+        "tax_id": { "type": "string", "description": "Seller tax registration number (GSTIN, VAT, EIN, etc.)." },
+        "email": { "type": "string", "description": "Seller email address." },
+        "phone": { "type": "string", "description": "Seller phone number." }
+      }
+    },
+    "buyer": {
+      "type": "object",
+      "description": "The party being billed.",
+      "properties": {
+        "name": { "type": "string", "description": "Buyer or bill-to name." },
+        "address": { "type": "string", "description": "Billing address." },
+        "tax_id": { "type": "string", "description": "Buyer tax registration number, if present." }
+      }
+    },
+    "ship_to": {
+      "type": "object",
+      "description": "Shipping or delivery recipient, if different from the buyer.",
+      "properties": {
+        "name": { "type": "string", "description": "Ship-to name." },
+        "address": { "type": "string", "description": "Shipping address." }
+      }
+    },
+    "line_items": {
+      "type": "array",
+      "description": "Individual products or services billed on the invoice.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "description": { "type": "string", "description": "Item or service description." },
+          "sku": { "type": "string", "description": "Product code, SKU, HSN/SAC or part number." },
+          "quantity": { "type": "number", "description": "Quantity billed." },
+          "unit_price": { "type": "number", "description": "Price per unit before tax." },
+          "discount": { "type": "number", "description": "Discount applied to this line." },
+          "tax_rate": { "type": "number", "description": "Tax rate for this line, as a percentage." },
+          "tax_amount": { "type": "number", "description": "Tax amount for this line." },
+          "amount": { "type": "number", "description": "Line total." }
+        }
+      }
+    },
+    "taxes": {
+      "type": "array",
+      "description": "Tax breakdown at invoice level (e.g. CGST, SGST, IGST, VAT, sales tax).",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string", "description": "Tax name." },
+          "rate": { "type": "number", "description": "Tax rate as a percentage." },
+          "amount": { "type": "number", "description": "Tax amount." }
+        }
+      }
+    },
+    "subtotal": {
+      "type": "number",
+      "description": "Sum of line items before tax, discounts and shipping."
+    },
+    "discount_total": {
+      "type": "number",
+      "description": "Total discount applied to the invoice."
+    },
+    "tax_total": {
+      "type": "number",
+      "description": "Total tax amount."
+    },
+    "shipping": {
+      "type": "number",
+      "description": "Shipping or delivery charges."
+    },
+    "total_amount": {
+      "type": "number",
+      "description": "Grand total payable."
+    },
+    "amount_paid": {
+      "type": "number",
+      "description": "Amount already paid, if stated."
+    },
+    "balance_due": {
+      "type": "number",
+      "description": "Outstanding amount still owed, if stated."
+    },
+    "payment_method": {
+      "type": "string",
+      "description": "Payment method (card, bank transfer, cash on delivery, etc.)."
+    },
+    "payment_terms": {
+      "type": "string",
+      "description": "Payment terms, e.g. Net 30."
+    },
+    "notes": {
+      "type": "string",
+      "description": "Any other notes or terms printed on the invoice."
+    }
+  }
+}
